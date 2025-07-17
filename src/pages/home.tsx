@@ -5,6 +5,7 @@ import { Input } from '@/components/ui/input';
 import { Label } from '@/components/ui/label';
 import { Upload, Settings, Zap, Code, Wrench } from 'lucide-react';
 import { useLocation } from 'wouter';
+import { loadFile } from '@/components/config-file';
 
 export function Home() {
     const [selectedFile, setSelectedFile] = useState<File | null>(null);
@@ -20,12 +21,14 @@ export function Home() {
 
     const handleCreateConfig = () => {
         console.log('Starting config wizard...');
+        loadFile(new File('robot.rbtconf'));
         navigate('wizard/');
     };
 
     const handleUploadConfig = () => {
         if (selectedFile) {
             console.log(`Uploading config file ${selectedFile.name}`);
+            loadFile(selectedFile);
             navigate('download/');
         }
         else
