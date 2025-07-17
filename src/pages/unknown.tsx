@@ -15,7 +15,7 @@ export function Unknown() {
         <div className="container mx-auto px-4 py-8">
             <Card className="hover:shadow-lg transition-shadow">
                 <CardHeader>
-                    <CardTitle className="flex items-center gap-2">
+                    <CardTitle className="flex items-center gap-2 align-right">
                         <TriangleAlert className="h-5 w-5" />
                         Error 404
                     </CardTitle>
