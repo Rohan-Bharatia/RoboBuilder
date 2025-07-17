@@ -5,7 +5,7 @@ import { Input } from '@/components/ui/input';
 import { Label } from '@/components/ui/label';
 import { Upload, Settings, Zap, Code, Wrench } from 'lucide-react';
 import { useLocation } from 'wouter';
-import { loadFile } from '@/components/config-file';
+import { loadFile, defaultConfig } from '@/components/config-file';
 
 export function Home() {
     const [selectedFile, setSelectedFile] = useState<File | null>(null);
@@ -21,7 +21,8 @@ export function Home() {
 
     const handleCreateConfig = () => {
         console.log('Starting config wizard...');
-        loadFile(new File('robot.rbtconf'));
+        const configContent = JSON.stringify(defaultConfig, null, 2);
+        loadFile(new File([configContent], 'robot.rbtconf', { type: 'application/json' }));
         navigate('wizard/');
     };
 
@@ -82,7 +83,7 @@ export function Home() {
                         </div>
                     </CardContent>
                 </Card>
-                <Card className="hover:shadow-lg transision-shadow">
+                <Card className="hover:shadow-lg transition-shadow">
                     <CardHeader>
                         <CardTitle className="flex items-center gap-2">
                             Upload Existing Configuration

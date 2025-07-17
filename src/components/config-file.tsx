@@ -10,11 +10,21 @@ export interface RobotProps {
     lastModified?: string;
 };
 
+export const defaultConfig: RobotProps = {
+    teamNumber: 4750,
+    teamName: 'Crusaders',
+    robotName: 'Bert',
+    roboRIOVersion: 1,
+    // ...
+    createdAt: new Date().toISOString(),
+    lastModified: new Date().toISOString(),
+};
+
 let globalConfig: RobotProps | null = null;
 let configListeners: Array<(config: RobotProps | null) => void> = [];
 
-function notifyListensers() {
-    configListeners.forEach(listeners => listener(globalConfog));
+function notifyListeners() {
+    configListeners.forEach(listener => listener(globalConfig));
 }
 
 export function useConfig() {
@@ -62,17 +72,8 @@ export function readFile(): RobotProps | null {
 };
 
 export function writeFile(key: string, value: any) {
-    if (!globalConfig) {
-        globalConfig = {
-            teamNumber: 0,
-            teamName: 'Unknown',
-            robotName: 'Unknown',
-            roboRIOVersion: 0,
-            // ...
-            createdAt: new Date().toISOString(),
-            lastModified: new Date().toISOString(),
-        };
-    }
+    if (!globalConfig)
+        globalConfig = defaultConfig;
 
     const keys = key.split('.');
     let current: any = globalConfig;
