@@ -2,6 +2,7 @@ import { Switch, Route } from 'wouter';
 import { ThemeProvider } from '@/components/theme-provider';
 import { ThemeToggle } from '@/components/theme-toggle';
 import { Home } from '@/pages/home';
+import { Unknown } from '@/pages/unknown';
 import './App.css'
 
 function App() {
@@ -23,6 +24,7 @@ function App() {
                         <Route path="wizard/" component={Wizard} />
                         <Route path="download/" component={Download} />
                         */}
+                        <Route component={Unknown} />
                     </Switch>
                 </main>
                 <footer>
