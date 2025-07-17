@@ -1,12 +1,14 @@
 import { useState, useEffect } from 'react';
 
 export interface RobotProps {
-    teamNumber?: number;
-    teamName?: string;
-    robotName?: string;
-    roboRIOVersion?: number;
-    // ...
-    createdAt?: string;
+    teamNumber: number;
+    teamName: string;
+    robotName: string;
+    roboRIOVersion: number;
+    drivetrainType: string;
+    language: string;
+    framework: string;
+    createdAt: string;
     lastModified?: string;
 };
 
@@ -15,7 +17,9 @@ export const defaultConfig: RobotProps = {
     teamName: 'Crusaders',
     robotName: 'Bert',
     roboRIOVersion: 1,
-    // ...
+    drivetrainType: 'swerve',
+    language: 'Java',
+    framework: 'Timed Robot',
     createdAt: new Date().toISOString(),
     lastModified: new Date().toISOString(),
 };

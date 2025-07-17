@@ -30,7 +30,7 @@ export function Home() {
         if (selectedFile) {
             console.log(`Uploading config file ${selectedFile.name}`);
             loadFile(selectedFile);
-            navigate('download/');
+            navigate('finish/');
         }
         else
            console.error('An invalid file was selected');
