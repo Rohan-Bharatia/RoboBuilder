@@ -1,6 +1,7 @@
-@import "tw-animate-css";
+@import 'tailwindcss';
+@import 'tw-animate-css';
 
-@custom-variant dark (&:is(.dark *));
+@variant dark (&:is(.dark *));
 
 @tailwind base;
 @tailwind components;
@@ -8,114 +9,119 @@
 
 :root {
   --font: 'Ubuntu', Serif;
-  --background: hsl(45, 20%, 98%); /* off-white */
-  --foreground: hsl(0, 0%, 12%);   /* dark gray */
-  --muted: hsl(240, 5%, 94%);      /* light gray */
-  --muted-foreground: hsl(215, 20%, 50%); /* slate */
-  --popover: hsl(45, 20%, 98%);
-  --popover-foreground: hsl(0, 0%, 12%);
-  --card: hsl(45, 20%, 98%);
-  --card-foreground: hsl(0, 0%, 12%);
-  --border: hsl(240, 5%, 84%);     /* light gray border */
-  --input: hsl(240, 5%, 84%);
-  --primary: hsl(0, 84%, 60%);     /* bright red */
-  --primary-foreground: hsl(0, 0%, 100%);
-  --secondary: hsl(240, 5%, 94%);
-  --secondary-foreground: hsl(0, 0%, 12%);
-  --accent: hsl(215, 20%, 88%);
-  --accent-foreground: hsl(0, 0%, 12%);
-  --destructive: hsl(0, 66%, 29%); /* maroon */
-  --destructive-foreground: hsl(0, 0%, 98%);
-  --ring: hsl(0, 0%, 30%);
+  --background: 45, 20%, 98%; /* off-white */
+  --foreground: 0, 0%, 12%;   /* dark gray */
+  --muted: 240, 5%, 94%;      /* light gray */
+  --muted-foreground: 215, 20%, 50%; /* slate */
+  --popover: 45, 20%, 98%;
+  --popover-foreground: 0, 0%, 12%;
+  --card: 45, 20%, 98%;
+  --card-foreground: 0, 0%, 12%;
+  --border: 240, 5%, 84%;     /* light gray border */
+  --input: 240, 5%, 84%;
+  --primary: 0, 84%, 60%;     /* bright red */
+  --primary-foreground: 0, 0%, 100%;
+  --secondary: 240, 5%, 94%;
+  --secondary-foreground: 0, 0%, 12%;
+  --accent: 215, 20%, 88%;
+  --accent-foreground: 0, 0%, 12%;
+  --destructive: 0, 66%, 29%; /* maroon */
+  --destructive-foreground: 0, 0%, 98%;
+  --ring: 0, 0%, 30%;
   --radius: 0.5rem;
 
   /* Custom color scheme */
-  --neutral-light: hsl(240, 5%, 94%);
-  --neutral-medium: hsl(215, 20%, 60%);
-  --neutral-dark: hsl(0, 0%, 12%);
-  --red-primary: hsl(0, 84%, 60%);
-  --red-secondary: hsl(0, 66%, 29%);
+  --neutral-light: 240, 5%, 94%;
+  --neutral-medium: 215, 20%, 60%;
+  --neutral-dark: 0, 0%, 12%;
+  --red-primary: 0, 84%, 60%;
+  --red-secondary: 0, 66%, 29%;
 }
 
 .dark {
-  --background: hsl(0, 0%, 6%);     /* nearly black */
-  --foreground: hsl(0, 0%, 96%);    /* light gray */
-  --muted: hsl(240, 5%, 20%);
-  --muted-foreground: hsl(215, 20%, 70%);
-  --popover: hsl(0, 0%, 6%);
-  --popover-foreground: hsl(0, 0%, 96%);
-  --card: hsl(0, 0%, 6%);
-  --card-foreground: hsl(0, 0%, 96%);
-  --border: hsl(240, 5%, 26%);
-  --input: hsl(240, 5%, 26%);
-  --primary: hsl(0, 84%, 60%);
-  --primary-foreground: hsl(0, 0%, 100%);
-  --secondary: hsl(240, 5%, 20%);
-  --secondary-foreground: hsl(0, 0%, 96%);
-  --accent: hsl(215, 20%, 30%);
-  --accent-foreground: hsl(0, 0%, 96%);
-  --destructive: hsl(0, 66%, 29%);
-  --destructive-foreground: hsl(0, 0%, 96%);
-  --ring: hsl(0, 0%, 60%);
+  --background: 0, 0%, 6%;     /* nearly black */
+  --foreground: 0, 0%, 96%;    /* light gray */
+  --muted: 240, 5%, 20%;
+  --muted-foreground: 215, 20%, 70%;
+  --popover: 0, 0%, 6%;
+  --popover-foreground: 0, 0%, 96%;
+  --card: 0, 0%, 6%;
+  --card-foreground: 0, 0%, 96%;
+  --border: 240, 5%, 26%;
+  --input: 240, 5%, 26%;
+  --primary: 0, 84%, 60%;
+  --primary-foreground: 0, 0%, 100%;
+  --secondary: 240, 5%, 20%;
+  --secondary-foreground: 0, 0%, 96%;
+  --accent: 215, 20%, 30%;
+  --accent-foreground: 0, 0%, 96%;
+  --destructive: 0, 66%, 29%;
+  --destructive-foreground: 0, 0%, 96%;
+  --ring: 0, 0%, 60%;
   --radius: 0.5rem;
 }
 
 @layer base {
     * {
-        @apply border-border;
+        /*@apply border-border;*/
+        border-color: hsl(var(--border));
     }
 
     body {
-        @apply font-sans antialiased bg-background text-foreground;
+        font-family: ui-sans-serif, system-ui, sans-serif, "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol", "Noto Color Emoji";
+        -webkit-font-smoothing: antialiased;
+        -moz-osx-font-smoothing: grayscale;
+        background-color: hsl(var(--background));
+        color: hsl(var(--foreground));
     }
 }
 
 @layer utilities {
     .text-neutral-light {
-        color: var(--neutral-light);
+        color: hsl(var(--neutral-light));
     }
 
     .text-neutral-medium {
-        color: var(--neutral-medium);
+        color: hsl(var(--neutral-medium));
     }
 
     .text-neutral-dark {
-        color: var(--neutral-dark);
+        color: hsl(var(--neutral-dark));
     }
 
     .text-red-primary {
-        color: var(--red-primary);
+        color: hsl(var(--red-primary));
     }
 
     .text-red-secondary {
-        color: var(--red-secondary);
+        color: hsl(var(--red-secondary));
     }
 
     .bg-neutral-light {
-        background-color: var(--neutral-light);
+        background-color: hsl(var(--neutral-light));
     }
 
     .bg-neutral-medium {
-        background-color: var(--neutral-medium);
+        background-color: hsl(var(--neutral-medium));
     }
 
     .bg-neutral-dark {
-        background-color: var(--neutral-dark);
+        background-color: hsl(var(--neutral-dark));
     }
 
     .bg-red-primary {
-        background-color: var(--red-primary);
+        background-color: hsl(var(--red-primary));
     }
 
     .bg-red-secondary {
-        background-color: var(--red-secondary);
+        background-color: hsl(var(--red-secondary));
     }
 
     .border-red-primary {
-        border-color: var(--red-primary);
+        border-color: hsl(var(--red-primary));
     }
 
     .hover\:bg-red-700:hover {
-        background-color: var(--red-secondary);
+        background-color: hsl(var(--red-secondary));
     }
 }
