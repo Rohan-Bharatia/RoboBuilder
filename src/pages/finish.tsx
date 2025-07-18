@@ -49,7 +49,7 @@ export function Finish() {
         }
 
         setGeneratedFiles(files);
-        setSelectedFiles(files[0]?.name || '');
+        setSelectedFile(files[0]?.name || '');
         setIsGenerating(false);
     };
 
@@ -184,37 +184,51 @@ export function Finish() {
                     <div className="grid md:cols-2 gap-4 text-sm">
                         <div>
                             <strong>
-                                Team:
+                                Team:{' '}
                             </strong>
                             {config.teamNumber} {config.teamName}
                         </div>
                         <div>
                             <strong>
-                                Robot:
+                                Robot:{' '}
                             </strong>
                             {config.robotName}
                         </div>
                         <div>
                             <strong>
-                                RoboRIO:
+                                RoboRIO:{' '}
                             </strong>
-                            v{config.roboRIOVersion}
+                            {config.roboRIOVersion}
                         </div>
                         <div>
                             <strong>
-                                Drivetrain:
+                                Drivetrain:{' '}
                             </strong>
                             {config.drivetrainType}
                         </div>
                         <div>
                             <strong>
-                                Language:
+                                Odometry:{' '}
+                            </strong>
+                            {config.odomEncoderType !== null || config.odomIMUType !== null ? 'Yes' : 'No'}
+                        </div>
+                        {config.odomIMUType !== null ? (
+                            <div>
+                                <strong>
+                                    IMU:{' '}
+                                </strong>
+                                {config.odomIMUType}
+                            </div>
+                        ) : null}
+                        <div>
+                            <strong>
+                                Language:{' '}
                             </strong>
                             {config.language}
                         </div>
                         <div>
                             <strong>
-                                Framework:
+                                Framework:{' '}
                             </strong>
                             {config.framework}
                         </div>

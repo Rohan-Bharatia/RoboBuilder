@@ -6,6 +6,13 @@ export interface RobotProps {
     robotName: string;
     roboRIOVersion: number;
     drivetrainType: string;
+    driveMotorType: string;
+    driveLateralMotorPorts: number[];
+    driveAngularMotorPorts: number[];
+    odomEncoderType: string;
+    odomLateralEncoderPorts: number[];
+    odomAngularEncoderPorts: number[];
+    odomIMUType: string;
     language: string;
     framework: string;
     createdAt: string;
@@ -18,6 +25,13 @@ export const defaultConfig: RobotProps = {
     robotName: 'Bert',
     roboRIOVersion: 1,
     drivetrainType: 'swerve',
+    driveMotorType: 'Neo',
+    driveLateralMotorPorts: [1, 2, 3, 4],
+    driveAngularMotorPorts: [5, 6, 7, 8],
+    odomEncoderType: 'CTRE Mag Encoder',
+    odomLateralEncoderPorts: [9, 10, 11, 12],
+    odomAngularEncoderPorts: [13, 14, 15, 16],
+    odomIMUType: 'NavX',
     language: 'Java',
     framework: 'Timed Robot',
     createdAt: new Date().toISOString(),
@@ -110,7 +124,7 @@ export function exportFile(filename: string) {
     const url  = URL.createObjectURL(blob);
     const link = document.createElement('a');
 
-    link.href = url;
+    link.href     = url;
     link.download = filename || 'robot.rbtconf';
 
     document.body.appendChild(link);

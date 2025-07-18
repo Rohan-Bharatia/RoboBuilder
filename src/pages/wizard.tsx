@@ -5,7 +5,7 @@ import { Input } from '@/components/ui/input';
 import { Label } from '@/components/ui/label';
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '@/components/ui/select';
 import { Progress } from '@/components/ui/progress';
-import { ArrowLeft, ArrowRight, CheckCircle } from 'lucide-react';
+import { ArrowLeft, ArrowRight, CheckCircle, Minus, Plus } from 'lucide-react';
 import { useLocation } from 'wouter';
 import { useConfig, writeFile } from '@/components/config-file';
 
@@ -37,6 +37,19 @@ const wizardSteps: WizardStep[] = [
         fields: [
             { key: 'roboRIOVersion', label: 'RoboRIO Version', type: 'select', options: ['1', '2'], required: true, },
             { key: 'drivetrainType', label: 'Drivetrain Type', type: 'select', options: ['tank', 'Swerve', 'Mechanum'], required: true, },
+            { key: 'driveMotorType', label: 'Drivetrain Motor Type', type: 'select', options: ['Neo', 'Neo Vortex', 'Kraken X60', 'Falcon 500'], required: true, },
+            { key: 'driveLateralMotorPorts', label: 'Drivetrain Lateral Motor Ports', type: 'array', required: true, },
+            { key: 'driveAngularMotorPorts', label: 'Drivetrain Angular Motor Ports', type: 'array', required: true, },
+        ],
+    },
+    {
+        title: 'Autonomous Configuration',
+        description: 'Configure your robot odometry',
+        fields: [
+            { key: 'odomEncoderType', label: 'Drivetrain Encoder Type', type: 'select', options: ['Internal', 'CTRE Mag Encoder'], required: false, },
+            { key: 'odomLateralEncoderPorts', label: 'Drivetrain Lateral Encoder Ports', type: 'array', required: false, },
+            { key: 'odomAngularEncoderPorts', label: 'Drivetrain Angular Encoder Ports', type: 'array', required: false, },
+            { key: 'odomIMUType', label: 'IMU Type', type: 'select', options: ['ADIS16448', 'NavX', 'Pigeon'], required: false, },
         ],
     },
     {
@@ -59,6 +72,29 @@ export function Wizard() {
 
     const handleInputChange = (key: string, value: any) => {
         setFormData(prev => ({ ...prev, [key]: value }));
+    };
+
+    const handleInputChangeArray = (key: string, index: number, value: string) => {
+        setFormData(prev => {
+            const updatedArray = [...(prev[key] as (number | string)[] || [])];
+            updatedArray[index] = value;
+            return {...prev, [key]: updatedArray};
+        });
+    };
+
+    const handleInputAddArrayItem = (key: string) => {
+        setFormData((prev) => ({
+            ...prev,
+            [key]: [...(prev[key] as (number | string)[] || []), ''],
+        }));
+    };
+
+    const handleInputRemoveArrayItem = (key: string, index: number) => {
+        setFormData((prev) => {
+            const updatedArray = [...(prev[key] as (number | string)[] ||[])];
+            updatedArray.splice(index, 1);
+            return {...prev, [key]: updatedArray};
+        });
     };
 
     const handlePrevious = () => {
@@ -142,6 +178,22 @@ export function Wizard() {
                                             ))}
                                         </SelectContent>
                                     </Select>
+                                ) : field.type === 'array' ? (
+                                <>
+                                    {(formData[field.key] as (number | string)[] || []).map((value: number | string, index: number) => (
+                                        <div key={index} className="flex items-center gap-2">
+                                            <Input type={field.type} value={value} onChange={(e) => handleInputChangeArray(field.key, index, e.target.values)} placeholder={`${field.label} #${index + 1}`} />
+                                            <Button onClick={() => handleInputRemoveArrayItem(field.key, index)} className="flex items-center gap-2">
+                                                <Minus className="w-5 h-5" />
+                                                Remove
+                                            </Button>
+                                        </div>
+                                    ))}
+                                    <Button onClick={() => handleInputAddArrayItem(field.key)} className="flex items-center gap-2">
+                                        <Plus className="w-5 h-5" />
+                                        Add
+                                    </Button>
+                                    </>
                                 ) : (
                                     <Input id={field.key} type={field.type} value={formData[field.key] || ''} onChange={(e) => handleInputChange(field.key, e.target.value)} placeholder={`Enter ${field.label.toLowerCase()}`} />
                                 )}
