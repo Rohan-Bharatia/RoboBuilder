@@ -6,6 +6,8 @@ import { ScrollArea } from '@/components/ui/scroll-area';
 import { Download, FileText, Settings, ArrowLeft } from 'lucide-react';
 import { useLocation } from 'wouter';
 import { useConfig, exportFile } from '@/components/config-file';
+import { generateRobotCode } from '@/lib/codegen'
+import JSZip from 'jszip';
 
 interface CodeFile {
     name: string;
@@ -32,39 +34,24 @@ export function Finish() {
 
         setIsGenerating(true);
 
-        const files: CodeFiles[] = [];
-
-        // TODO: Implement file creations
-        switch (config.language) {
-            case 'Java':
-                break;
-            case 'C++':
-                break;
-            case 'Python':
-                break;
-            default:
-                break;
-        }
-        if (config.drivetrainType) {
-        }
+        const files = await generateRobotCode(config);
 
         setGeneratedFiles(files);
         setSelectedFile(files[0]?.name || '');
         setIsGenerating(false);
     };
 
-    const getFileExtension = (language: string) => {
-        switch (language) {
-            case 'Java':   return 'java';
-            case 'C++':    return 'cpp';
-            case 'Python': return 'py';
-            default:       return 'java';
-        }
-    };
+    const handleDownloadZip = async () => {
+        const zip = new JSZip();
 
-    const handleDownloadZip = () => {
-        // TODO: Use JSZip to create a zip file for the project
-        console.log('Downloaded robot code');
+        files?.map((file: CodeFile) => {
+            zip.file(file.path, file.content);
+        });
+        zip.generateAsync({ type: 'blob' }).then((blob) => {
+            saveAs(blob, `${config.robotName || robot}.zip`);
+        });
+
+        exportFile(`${config.robotName || robot}.zip`);
     };
 
     const handleDownloadConfig = () => {
@@ -138,7 +125,7 @@ export function Finish() {
                         </ScrollArea>
                     </CardContent>
                 </Card>
-                <Card>
+                <Card className="lg:col-span-3">
                     <CardHeader>
                         <CardTitle className="text-lg">
                             {selectedFileContent?.name || 'Select a file'}
